@@ -17,7 +17,7 @@ public class Labels extends Application
 
     Stage window;
     Scene scene1, scene2;
-    Button plik_do_zaszyfrowania, plik_z_kluczem,  docelowy_plik, zaszyfruj;
+    Button plik_do_zaszyfrowania, wpisz_klucz,  docelowy_plik, zaszyfruj;
     FileChooser fileChooser = new FileChooser();
     Label label, label2, label3;
     FlowPane layout = new FlowPane();
@@ -31,7 +31,7 @@ public class Labels extends Application
     {
         primaryStage.setTitle("Szyfrowanie tekstu");
         plik_do_zaszyfrowania = new Button("Wybierz plik do zaszyfrowania");
-        plik_z_kluczem = new Button ("Wybierz plik z kluczem");
+        wpisz_klucz = new Button ("Wpisz klucz");
         docelowy_plik = new Button("Wybierz docelowy plik");
         zaszyfruj = new Button("Zaszyfruj");
 
@@ -41,7 +41,7 @@ public class Labels extends Application
             @Override
             public void handle(ActionEvent event)
             {
-                fileChooser.setTitle("Open Resource File");
+                fileChooser.setTitle("Open Resourtce File");
                 File file = fileChooser.showOpenDialog(primaryStage);
                 if(file != null)
                 {
@@ -50,7 +50,20 @@ public class Labels extends Application
             }
         });
 
-        plik_z_kluczem.setOnAction(new EventHandler<ActionEvent>()
+        plik_do_zaszyfrowania.setTranslateX(257);
+        plik_do_zaszyfrowania.setTranslateY(100);
+
+        wpisz_klucz.setTranslateX(80);
+        wpisz_klucz.setTranslateY(200);
+
+        docelowy_plik.setTranslateX(0);
+        docelowy_plik.setTranslateY(300);
+
+        zaszyfruj.setTranslateX(-250);
+        zaszyfruj.setTranslateY(400);
+
+
+        wpisz_klucz.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
             public void handle(ActionEvent event)
@@ -84,7 +97,7 @@ public class Labels extends Application
 
 
         layout.getChildren().add(plik_do_zaszyfrowania);
-        layout.getChildren().add(plik_z_kluczem);
+        layout.getChildren().add(wpisz_klucz);
         layout.getChildren().add(docelowy_plik);
         layout.getChildren().add(zaszyfruj);
 

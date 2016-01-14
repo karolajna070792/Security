@@ -9,7 +9,7 @@ public class Main
 
     public String klucz = "Tomasz";
 
-    public String tekst_do_zaszyfrowania="Ważne są tylko te dni, których jeszcze nie znamy.";
+    public String tekst_do_zaszyfrowania="Ważne są tylko te dni, których jeszcze nie znamy. ";
 
     int [] numbers = new int [tekst_do_zaszyfrowania.length()];
 
@@ -29,8 +29,8 @@ public class Main
 
         for(int x=0; x<matrix[0].length; x++) {
             for (int y = 0; y < matrix.length; y ++) {
-                System.out.println(x+"-"+y);
-                System.out.println(text.charAt(x*key.length()+y));
+               // System.out.println(x+"-"+y);
+               // System.out.println(text.charAt(x*key.length()+y));
                 int kluczWartosc = (int)key.charAt(y);
                 int textWartosc = (int)text.charAt(x*key.length()+y);
                 matrix[y][x] = textWartosc + kluczWartosc;
@@ -56,23 +56,49 @@ public class Main
 //                }
 //            }
 //        }
-        for(int i=0; i<key.length(); i++)
-    {
-        for(int j=0; j<key.length(); j++)
+
+        //Drukowanie poprawne macierzy
+        for(int x=0; x<matrix[0].length; x++)
         {
-
-        }
-
-    }
-
-        for(int x=0; x<matrix[0].length; x++) {
-            for (int y = 0; y < matrix.length; y ++) {
+            for (int y = 0; y < matrix.length; y ++)
+            {
                 System.out.print(matrix[y][x]+ " ");
+
             }
             System.out.println();
         }
 
+
+        //Drukowanie blokowe macierzy - kolumnowo
+//        int [][] matrixtest = new int [5][5];
+//        int rowlength = matrixtest.length;
+//        int columnlength = matrixtest[0].length;
+//        int [] liczby = {1,2,3,4,5,6};
+//        int ilosc=0;
+//        int dlugosctablicy = liczby.length;
+//
+//        for(int row=0; row<5; row++)
+//        {
+//            for (int column=0; column<5; column ++)
+//            {
+//                System.out.println("ilosc: "+ ilosc);
+//                System.out.println("dlugosctablicy: "+ dlugosctablicy);
+//                if (ilosc<=matrixtest[row].length)
+//                {
+//                    matrixtest[row][column] = liczby[ilosc];
+//                    System.out.println(matrixtest[row][column]);
+//                }
+//                else
+//                {
+//                    matrixtest[row][column]=0;
+//                }
+//                ilosc++;
+//            }
+//        }
+
     }
+
+
 
     public static void main(String [] args)
     {
