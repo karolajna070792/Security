@@ -1,7 +1,12 @@
 package sample;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.File;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+
 
 
 public class Main
@@ -24,19 +29,32 @@ public class Main
     public void szyfrowanieBloku ( String text, String key )
     {
         char lastCharacter = key.charAt(key.length()-1);
-        int [][] matrix = new int [key.length()][text.length()/key.length() + (text.length() % key.length())];
+        int [][] matrix = new int [key.length()][key.length()];
+        int [][] matrix2 = new int[key.length()][key.length()];
 
+        int ilosc=0;
+        int iloscPol = key.length()*key.length();
 
         for(int x=0; x<matrix[0].length; x++) {
             for (int y = 0; y < matrix.length; y ++) {
-               // System.out.println(x+"-"+y);
-               // System.out.println(text.charAt(x*key.length()+y));
+//                System.out.println(x+"-"+y);
+//                System.out.println(text.charAt(x*key.length()+y));
                 int kluczWartosc = (int)key.charAt(y);
                 int textWartosc = (int)text.charAt(x*key.length()+y);
-                matrix[y][x] = textWartosc + kluczWartosc;
+                if (ilosc<=iloscPol)
+                {
+                   matrix[y][x] = textWartosc + kluczWartosc;
+                }
+//                else if(ilosc>iloscPol)
+//                {
+//                    System.out.println("Jestem w srodku II pętli");
+//                    matrix2[y][x]=textWartosc + kluczWartosc;
+//                }
+//                System.out.println("Ilosc: "+ilosc);
+//                System.out.println("IloscPol: "+iloscPol);
+                ilosc++;
             }
         }
-
 
 //        int x=0;
 //        for(int y=0; y<text.length(); y++) {
@@ -68,6 +86,30 @@ public class Main
             System.out.println();
         }
 
+       System.out.println();
+
+
+        //zczytywanie blokowe
+
+        int ilosc2=1;
+        for(int x=0; x<matrix[0].length; x++)
+        {
+
+            for (int y = 0; y < matrix.length; y ++)
+            {
+               System.out.print(matrix[x][y]+ " ");
+//                System.out.println("matrix[0].length: "+matrix[0].length);
+//                System.out.println("ilosc: "+ilosc2);
+                if(matrix[0].length==ilosc2)
+                {
+                    System.out.print(" / ");
+                    ilosc2=0;
+                }
+                ilosc2++;
+            }
+        }
+
+
 
         //Drukowanie blokowe macierzy - kolumnowo
 //        int [][] matrixtest = new int [5][5];
@@ -98,12 +140,19 @@ public class Main
 
     }
 
-
-
-    public static void main(String [] args)
+    public void zapisDoPliku () throws FileNotFoundException
     {
+        PrintWriter zaszyfrowanyPlik = new PrintWriter("zaszyfrowanyTekst.txt");
+        zaszyfrowanyPlik.print("test bla bla bla");
+        zaszyfrowanyPlik.close();
+
+    }
+
+
+    public static void main(String [] args) throws FileNotFoundException {
         Main test = new Main();
         test.szyfrowanieBloku("Wazne sa tylko te dni, których jeszcze nie znamy", "Tomasz");
+        test.zapisDoPliku();
 
     }
 }
