@@ -146,7 +146,7 @@ public class Labels extends Application {
     public void start (Stage primaryStage) throws Exception
     {
 
-        Pane mainPane = (Pane) FXMLLoader.load(Labels.class.getResource("secondWindow.fxml"));
+        Pane mainPane = (Pane) FXMLLoader.load(Labels.class.getResource("thirdWindow.fxml"));
         primaryStage.setTitle("Główne okno");
         primaryStage.setScene(new Scene(mainPane));
         primaryStage.show();
@@ -157,7 +157,6 @@ public class Labels extends Application {
     {
 
         Application.launch(args);
-
 
     }
 
