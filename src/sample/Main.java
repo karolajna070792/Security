@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.Scanner;
 import java.util.StringJoiner;
+import java.util.NoSuchElementException;
 
 
 public class Main
@@ -27,7 +28,22 @@ public class Main
         return amount;
     }
 
-    public int[][] szyfrowanieBloku(String text, String key) {
+    public static int [][] szyfrowanieBloku(File file, String key) throws FileNotFoundException {
+        //odczytanie zawartosci z pliku
+
+        Scanner in = new Scanner(file);
+        System.out.print(file.length());
+        String zaszyfrowaneZdanie = new String("");
+
+
+
+        while(in.hasNextLine())
+        {
+            System.out.println(in.nextLine());
+            zaszyfrowaneZdanie = in.nextLine();
+        }
+        
+
         char lastCharacter = key.charAt(key.length() - 1);
         int[][] matrix = new int[key.length()][key.length()];
         int ilosc = 0;
@@ -38,7 +54,7 @@ public class Main
 //                System.out.println(x+"-"+y);
 //                System.out.println(text.charAt(x*key.length()+y));
                 int kluczWartosc = (int) key.charAt(y);
-                int textWartosc = (int) text.charAt(x * key.length() + y);
+                int textWartosc = (int) zaszyfrowaneZdanie.charAt(x * key.length() + y);
                 if (ilosc <= iloscPol) {
                     matrix[y][x] = textWartosc + kluczWartosc;
                 }
@@ -116,7 +132,11 @@ public class Main
         File file = new File("zaszyfrowanyTekst.txt");
         Scanner in = new Scanner(file);
         String zaszyfrowaneZdanie = in.nextLine();
-        System.out.println(zaszyfrowaneZdanie);
+
+        while(in.hasNextLine())
+        {
+            System.out.println(zaszyfrowaneZdanie);
+        }
 
         //zamiana wiadomosci odczytanej z pliku na macierz
         String [] parts = zaszyfrowaneZdanie.split(" / ");
@@ -182,9 +202,9 @@ public class Main
 
     }
 
-    public void zapisDoPliku_zaszyfrowanaWiadomosc (int [][] zaszyfrowanaWiadomosc) throws FileNotFoundException
+    public static void zapisDoPliku_zaszyfrowanaWiadomosc (int [][] zaszyfrowanaWiadomosc, File file) throws FileNotFoundException
     {
-        PrintWriter zaszyfrowanyPlik = new PrintWriter("zaszyfrowanyTekst.txt");
+        PrintWriter zaszyfrowanyPlik = new PrintWriter(file);
         int ilosc2 = 1;
         for (int x = 0; x < zaszyfrowanaWiadomosc[0].length; x++)
         {
@@ -221,8 +241,10 @@ public class Main
     public static void main(String [] args) throws FileNotFoundException
     {
         Main test = new Main();
-        int [][] wiadomosc = test.szyfrowanieBloku("Wazne sa tylko te dni, których jeszcze nie znamy", "Tomasz");
-        test.zapisDoPliku_zaszyfrowanaWiadomosc(wiadomosc);
+        File file = new File("c:\\Users\\Karolina\\Desktop\\poczatkowy.txt");
+        int [][] wiadomosc = test.szyfrowanieBloku(file, "Tomasz");
+        File file2 = new File("c:\\Users\\Karolina\\Desktop\\koncowy.txt");
+        test.zapisDoPliku_zaszyfrowanaWiadomosc(wiadomosc, file2);
         System.out.println();
         char [][] odszyfrowana_wiadomosc = test.deszyfrowanie("Tomasz");
         test.zapisDoPliku_odszyfrowaniaWiadomosc(odszyfrowana_wiadomosc);

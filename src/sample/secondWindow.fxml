@@ -7,9 +7,10 @@
 
 <Pane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button  id="plikTxt" layoutX="20.0" layoutY="85.0" text="Wybierz plik do zaszyfrowania" />
+      <Button id="plikTxt" layoutX="20.0" layoutY="85.0" text="Wybierz plik do zaszyfrowania" />
       <Button id="plikSzyfr" layoutX="20.0" layoutY="251.0" text="Wybierz docelowy plik" />
-      <TextField id="klucz" layoutX="20.0" layoutY="175.0" prefHeight="25.0" prefWidth="231.0" />
+      <Text id="napis" layoutX="20.0" layoutY="192.0" text="Wpisz klucz" wrappingWidth="109.60546875" />
+      <TextField id="klucz" layoutX="300.0" layoutY="175.0" prefHeight="25.0" prefWidth="231.0" />
       <Button id="zaszyfruj" layoutX="20.0" layoutY="310.0" prefHeight="25.0" prefWidth="157.0" text="ZASZYFRUJ" />
    </children>
 </Pane>

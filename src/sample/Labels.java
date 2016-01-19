@@ -21,8 +21,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class Labels extends Application {
 
@@ -33,7 +36,7 @@ public class Labels extends Application {
 
     }
 
-    public void start (final Stage primaryStage) throws Exception
+    public void start (final Stage primaryStage) throws IOException
     {
         final Data data = new Data();
         final Pane mainPane = (Pane) FXMLLoader.load(Labels.class.getResource("secondWindow.fxml"));
@@ -58,14 +61,36 @@ public class Labels extends Application {
                 data.plikZaszyfr = fileChooser.showOpenDialog(primaryStage);
             }
         });
-        zaszyfruj.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            zaszyfruj.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 TextField textField = (TextField) mainPane.lookup("#klucz");
                 data.klucz = textField.getText();
-
                 System.out.println(data.klucz);
 
-                //wywolanie kodu szyfrujacego i zapisujacego do pliku.
+//                data.plikTxt  plik do odczytu
+//                data.plikZaszyfr plik do zapisu
+
+                System.out.println("data.plikTxt.length(): "+data.plikTxt.length());
+                System.out.println("Klucz: "+data.klucz);
+                System.out.println("data.plikTxt.canRead "+data.plikTxt.canRead());
+
+
+
+
+                int [][] zaszyfrowanaWiadomosc = new int[0][];
+                try {
+                    zaszyfrowanaWiadomosc = Main.szyfrowanieBloku(data.plikTxt, data.klucz);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    Main.zapisDoPliku_zaszyfrowanaWiadomosc(zaszyfrowanaWiadomosc,data.plikZaszyfr);
+                } catch (FileNotFoundException e)
+                {
+                    e.printStackTrace();
+                }
+
+
             }
         });
 
