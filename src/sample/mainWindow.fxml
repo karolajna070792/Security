@@ -14,12 +14,12 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="321.0" prefWidth="501.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 
     <children>
-      <Text layoutX="108.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Czy chcesz zaszyfrować swój plik?" textAlignment="CENTER">
+      <Text layoutX="108.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jaką metodę chcesz zastosować?" textAlignment="CENTER">
               <font>
                   <Font name="Arial Black" size="15.0" />
                       </font>
       </Text>
-      <Button fx:id ="takButton" layoutX="108.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="TAK" textAlignment="CENTER" />
-      <Button fx:id ="nieButton" layoutX="305.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="NIE" />
+      <Button fx:id="szyfrowanieButton" layoutX="89.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Szyfrowanie" textAlignment="CENTER" />
+      <Button fx:id="deszyfrowanieButton" layoutX="305.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Deszyfrowanie" />
    </children>
 </Pane>

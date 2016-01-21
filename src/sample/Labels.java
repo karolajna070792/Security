@@ -3,6 +3,7 @@ package sample;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -41,55 +42,114 @@ public class Labels extends Application {
     public void start (final Stage primaryStage) throws IOException
     {
         final Data data = new Data();
-        final Pane mainPane = (Pane) FXMLLoader.load(Labels.class.getResource("secondWindow.fxml"));
-
+        final Pane mainPane = (Pane) FXMLLoader.load(Labels.class.getResource("mainWindow.fxml"));
 
         Button plikTxt = (Button) mainPane.lookup("#plikTxt");
         Button plikSzyfr = (Button) mainPane.lookup("#plikSzyfr");
         Button zaszyfruj = (Button) mainPane.lookup("#zaszyfruj");
 
-        plikTxt.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                FileChooser fileChooser = new FileChooser();
-                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-                fileChooser.getExtensionFilters().add(extFilter);
-                data.plikTxt = fileChooser.showOpenDialog(primaryStage);
-            }
-        });
-        plikSzyfr.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                FileChooser fileChooser = new FileChooser();
-                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-                fileChooser.getExtensionFilters().add(extFilter);
-                data.plikZaszyfr = fileChooser.showOpenDialog(primaryStage);
-            }
-        });
-            zaszyfruj.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                PasswordField textField = (PasswordField) mainPane.lookup("#klucz");
-                data.klucz = textField.getText();
+        // zamykanie aplikacji
 
-//                data.plikTxt  plik do odczytu
-//                data.plikZaszyfr plik do zapisu
+        final Button deszyfrowanie = (Button) mainPane.lookup("#deszyfrowanieButton");
+        deszyfrowanie.setOnMouseClicked(new EventHandler<MouseEvent>() {
+          public void handle(MouseEvent event)
+          {
+              try {
+                  Parent thirdWindow = FXMLLoader.load(getClass().getResource("thirdWindow.fxml"));
+                  Scene thirdWindowScene = new Scene(thirdWindow);
+                  Stage app_stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                  app_stage.setScene(thirdWindowScene);
+                  app_stage.show();
+              } catch (IOException e) {
+                  e.printStackTrace();
+              }
 
+          }
+      });
 
+        //przechodzenie do nastepnego okna (z okna głównego do II)
 
-                int [][] zaszyfrowanaWiadomosc = new int[0][];
+        final Button szyfrowanie = (Button) mainPane.lookup("#szyfrowanieButton");
+
+        szyfrowanie.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            public void handle(MouseEvent event)
+            {
                 try {
-                    zaszyfrowanaWiadomosc = Main.szyfrowanieBloku(data.plikTxt, data.klucz);
-                } catch (FileNotFoundException e) {
+                    Parent secondWindow = FXMLLoader.load(getClass().getResource("secondWindow.fxml"));
+                    Scene secondWindowScene = new Scene(secondWindow);
+                    Stage app_stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                    app_stage.setScene(secondWindowScene);
+                    app_stage.show();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
-                try {
-                    Main.zapisDoPliku_zaszyfrowanaWiadomosc(zaszyfrowanaWiadomosc,data.plikZaszyfr);
-                } catch (FileNotFoundException e)
-                {
-                    e.printStackTrace();
-                }
-
-
             }
         });
+
+
+        // to nie jest w I oknie! zmienić! 
+        final Button wrocButton = (Button) mainPane.lookup("#wrocButton");
+
+        wrocButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event)
+            {
+                try {
+                    Parent mainWindow = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
+                    Scene mainWindowScene = new Scene(mainWindow);
+                    Stage app_stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                    app_stage.setScene(mainWindowScene);
+                    app_stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+
+//        plikTxt.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            public void handle(MouseEvent event) {
+//                FileChooser fileChooser = new FileChooser();
+//                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+//                fileChooser.getExtensionFilters().add(extFilter);
+//                data.plikTxt = fileChooser.showOpenDialog(primaryStage);
+//            }
+//        });
+//        plikSzyfr.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            public void handle(MouseEvent event) {
+//                FileChooser fileChooser = new FileChooser();
+//                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+//                fileChooser.getExtensionFilters().add(extFilter);
+//                data.plikZaszyfr = fileChooser.showOpenDialog(primaryStage);
+//            }
+//        });
+//            zaszyfruj.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            public void handle(MouseEvent event) {
+//                PasswordField textField = (PasswordField) mainPane.lookup("#klucz");
+//                data.klucz = textField.getText();
+//
+////                data.plikTxt  plik do odczytu
+////                data.plikZaszyfr plik do zapisu
+//
+//
+//
+//                int [][] zaszyfrowanaWiadomosc = new int[0][];
+//                try {
+//                    zaszyfrowanaWiadomosc = Main.szyfrowanieBloku(data.plikTxt, data.klucz);
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//                try {
+//                    Main.zapisDoPliku_zaszyfrowanaWiadomosc(zaszyfrowanaWiadomosc,data.plikZaszyfr);
+//                } catch (FileNotFoundException e)
+//                {
+//                    e.printStackTrace();
+//                }
+//
+//
+//            }
+//        });
 
         primaryStage.setTitle("Główne okno");
         primaryStage.setScene(new Scene(mainPane));
@@ -160,11 +220,11 @@ public class Labels extends Application {
 //    }
 
 
+
     public static  void main (String [] args)
     {
 
         Application.launch(args);
-
 
     }
 }
