@@ -36,16 +36,76 @@ public class Labels extends Application {
 
     }
 
+//    public void start (final Stage primaryStage) throws IOException
+//    {
+//        final Data data = new Data();
+//        final Pane mainPane = (Pane) FXMLLoader.load(Labels.class.getResource("secondWindow.fxml"));
+//
+//
+//        Button plikTxt = (Button) mainPane.lookup("#plikTxt");
+//        Button plikSzyfr = (Button) mainPane.lookup("#plikSzyfr");
+//        Button zaszyfruj = (Button) mainPane.lookup("#zaszyfruj");
+//
+//        plikTxt.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            public void handle(MouseEvent event) {
+//                FileChooser fileChooser = new FileChooser();
+//                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+//                fileChooser.getExtensionFilters().add(extFilter);
+//                data.plikTxt = fileChooser.showOpenDialog(primaryStage);
+//            }
+//        });
+//        plikSzyfr.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            public void handle(MouseEvent event) {
+//                FileChooser fileChooser = new FileChooser();
+//                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+//                fileChooser.getExtensionFilters().add(extFilter);
+//                data.plikZaszyfr = fileChooser.showOpenDialog(primaryStage);
+//            }
+//        });
+//            zaszyfruj.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            public void handle(MouseEvent event) {
+//                TextField textField = (TextField) mainPane.lookup("#klucz");
+//                data.klucz = textField.getText();
+//
+////                data.plikTxt  plik do odczytu
+////                data.plikZaszyfr plik do zapisu
+//
+//
+//
+//                int [][] zaszyfrowanaWiadomosc = new int[0][];
+//                try {
+//                    zaszyfrowanaWiadomosc = Main.szyfrowanieBloku(data.plikTxt, data.klucz);
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//                try {
+//                    Main.zapisDoPliku_zaszyfrowanaWiadomosc(zaszyfrowanaWiadomosc,data.plikZaszyfr);
+//                } catch (FileNotFoundException e)
+//                {
+//                    e.printStackTrace();
+//                }
+//
+//
+//            }
+//        });
+//
+//        primaryStage.setTitle("Główne okno");
+//        primaryStage.setScene(new Scene(mainPane));
+//        primaryStage.show();
+//    }
+
+
     public void start (final Stage primaryStage) throws IOException
     {
         final Data data = new Data();
-        final Pane mainPane = (Pane) FXMLLoader.load(Labels.class.getResource("secondWindow.fxml"));
-        Button plikTxt = (Button) mainPane.lookup("#plikTxt");
-        Button plikSzyfr = (Button) mainPane.lookup("#plikSzyfr");
-        Button zaszyfruj = (Button) mainPane.lookup("#zaszyfruj");
+        final Pane mainPane = (Pane) FXMLLoader.load(Labels.class.getResource("thirdWindow.fxml"));
 
 
-        plikTxt.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        Button plikTxtZaszyfrowany = (Button) mainPane.lookup("#plik_zaszyfrowany");
+        Button plikOdszyfr = (Button) mainPane.lookup("#plik_odszyfr");
+        Button odszyfruj = (Button) mainPane.lookup("#deszyfruj");
+
+        plikTxtZaszyfrowany.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 FileChooser fileChooser = new FileChooser();
                 FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
@@ -53,7 +113,8 @@ public class Labels extends Application {
                 data.plikTxt = fileChooser.showOpenDialog(primaryStage);
             }
         });
-        plikSzyfr.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        plikOdszyfr.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 FileChooser fileChooser = new FileChooser();
                 FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
@@ -61,30 +122,25 @@ public class Labels extends Application {
                 data.plikZaszyfr = fileChooser.showOpenDialog(primaryStage);
             }
         });
-            zaszyfruj.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        odszyfruj.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 TextField textField = (TextField) mainPane.lookup("#klucz");
                 data.klucz = textField.getText();
-                System.out.println(data.klucz);
 
 //                data.plikTxt  plik do odczytu
 //                data.plikZaszyfr plik do zapisu
 
-                System.out.println("data.plikTxt.length(): "+data.plikTxt.length());
-                System.out.println("Klucz: "+data.klucz);
-                System.out.println("data.plikTxt.canRead "+data.plikTxt.canRead());
 
 
-
-
-                int [][] zaszyfrowanaWiadomosc = new int[0][];
+                char [][] odszyfrowanaWiadomosc = new char[0][];
                 try {
-                    zaszyfrowanaWiadomosc = Main.szyfrowanieBloku(data.plikTxt, data.klucz);
+                    odszyfrowanaWiadomosc = Main.deszyfrowanie(data.plikTxt, data.klucz);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
                 try {
-                    Main.zapisDoPliku_zaszyfrowanaWiadomosc(zaszyfrowanaWiadomosc,data.plikZaszyfr);
+                    Main.zapisDoPliku_odszyfrowaniaWiadomosc(odszyfrowanaWiadomosc, data.plikZaszyfr);
                 } catch (FileNotFoundException e)
                 {
                     e.printStackTrace();
@@ -97,7 +153,11 @@ public class Labels extends Application {
         primaryStage.setTitle("Główne okno");
         primaryStage.setScene(new Scene(mainPane));
         primaryStage.show();
+
     }
+
+
+
 
 
     public static  void main (String [] args)
@@ -107,6 +167,7 @@ public class Labels extends Application {
 
 
     }
-
-
 }
+
+
+

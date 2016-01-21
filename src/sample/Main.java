@@ -3,12 +3,7 @@ package sample;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.File;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.util.Scanner;
-import java.util.StringJoiner;
-import java.util.NoSuchElementException;
 
 
 public class Main
@@ -32,17 +27,14 @@ public class Main
         //odczytanie zawartosci z pliku
 
         Scanner in = new Scanner(file);
-        System.out.print(file.length());
-        String zaszyfrowaneZdanie = new String("");
-
-
-
-        while(in.hasNextLine())
+        System.out.println(in.hasNextLine());
+        String zaszyfrowaneZdanie = in.nextLine();
+        System.out.println(zaszyfrowaneZdanie);
+        while(in.hasNext())
         {
             System.out.println(in.nextLine());
-            zaszyfrowaneZdanie = in.nextLine();
         }
-        
+
 
         char lastCharacter = key.charAt(key.length() - 1);
         int[][] matrix = new int[key.length()][key.length()];
@@ -51,20 +43,16 @@ public class Main
 
         for (int x = 0; x < matrix[0].length; x++) {
             for (int y = 0; y < matrix.length; y++) {
-//                System.out.println(x+"-"+y);
-//                System.out.println(text.charAt(x*key.length()+y));
                 int kluczWartosc = (int) key.charAt(y);
                 int textWartosc = (int) zaszyfrowaneZdanie.charAt(x * key.length() + y);
-                if (ilosc <= iloscPol) {
+                if (ilosc <= iloscPol)
+                {
                     matrix[y][x] = textWartosc + kluczWartosc;
                 }
-//                else if(ilosc>iloscPol)
-//                {
-//                    System.out.println("Jestem w srodku II pętli");
-//                    matrix2[y][x]=textWartosc + kluczWartosc;
-//                }
-//                System.out.println("Ilosc: "+ilosc);
-//                System.out.println("IloscPol: "+iloscPol);
+                else if(ilosc>iloscPol)
+                {
+                    matrix[y][x]=0;
+                }
                 ilosc++;
             }
         }
@@ -126,16 +114,15 @@ public class Main
     }
 
 
-    public char [][] deszyfrowanie (String klucz) throws FileNotFoundException {
+    public static char [][] deszyfrowanie (File file, String klucz) throws FileNotFoundException {
 
         //odczyt z pliku
-        File file = new File("zaszyfrowanyTekst.txt");
         Scanner in = new Scanner(file);
+        System.out.println("has nextLine: "+in.hasNextLine());
         String zaszyfrowaneZdanie = in.nextLine();
-
-        while(in.hasNextLine())
+        while(in.hasNext())
         {
-            System.out.println(zaszyfrowaneZdanie);
+            System.out.println(in.nextLine());
         }
 
         //zamiana wiadomosci odczytanej z pliku na macierz
@@ -224,9 +211,9 @@ public class Main
 
     }
 
-    public void zapisDoPliku_odszyfrowaniaWiadomosc (char [][] odszyfrowanaWiadomosc) throws FileNotFoundException
+    public static void zapisDoPliku_odszyfrowaniaWiadomosc (char [][] odszyfrowanaWiadomosc, File file) throws FileNotFoundException
     {
-        PrintWriter odszyfrowanyPlik = new PrintWriter("odszyfrowanyTekst.txt");
+        PrintWriter odszyfrowanyPlik = new PrintWriter(file);
         for (int x = 0; x < odszyfrowanaWiadomosc[0].length; x++)
         {
             for (int y = 0; y < odszyfrowanaWiadomosc.length; y++)
@@ -244,12 +231,12 @@ public class Main
         File file = new File("c:\\Users\\Karolina\\Desktop\\poczatkowy.txt");
         int [][] wiadomosc = test.szyfrowanieBloku(file, "Tomasz");
         File file2 = new File("c:\\Users\\Karolina\\Desktop\\koncowy.txt");
-        test.zapisDoPliku_zaszyfrowanaWiadomosc(wiadomosc, file2);
+       test.zapisDoPliku_zaszyfrowanaWiadomosc(wiadomosc, file2);
         System.out.println();
-        char [][] odszyfrowana_wiadomosc = test.deszyfrowanie("Tomasz");
-        test.zapisDoPliku_odszyfrowaniaWiadomosc(odszyfrowana_wiadomosc);
+        char [][] odszyfrowana_wiadomosc = test.deszyfrowanie(file, "Tomasz");
+        test.zapisDoPliku_odszyfrowaniaWiadomosc(odszyfrowana_wiadomosc, file2);
 
-        System.out.println("");
+//        System.out.println("");
 
 
     }
