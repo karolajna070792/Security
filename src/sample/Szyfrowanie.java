@@ -16,6 +16,9 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Szyfrowanie extends Application {
 
@@ -87,7 +90,104 @@ public class Szyfrowanie extends Application {
                 data.klucz = textField.getText();
                 System.out.println("deszyfrowanie");
 
-                //twoj kod do deszyfrowana
+                Scanner in = null;
+                try {
+                    in = new Scanner(data.plikZaszyfr);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                String zaszyfrowaneZdanie = in.nextLine();
+                while (in.hasNext()) {
+                    zaszyfrowaneZdanie = zaszyfrowaneZdanie + in.nextLine();
+                }
+                String[] parts = zaszyfrowaneZdanie.split(" ");
+                int [] integerParseInt = new int[parts.length];
+
+                for (int i = 0; i < parts.length; i++)
+                {
+                    integerParseInt[i]=Integer.parseInt(parts[i]);
+                }
+
+                int[][] matrix = new int[data.klucz.length()][data.klucz.length()];
+                int iloscPol = data.klucz.length() * data.klucz.length();
+                int ileMatrixow = (int) (zaszyfrowaneZdanie.length()) / (iloscPol) + 1;
+
+                ArrayList<int[][]> listaMatrixow = new ArrayList<int[][]>();
+
+                for (int i = 0; i < ileMatrixow; i++)
+                {
+                    matrix = new int[data.klucz.length()][data.klucz.length()];
+                    listaMatrixow.add(matrix);
+                    for (int x = 0; x < matrix[0].length; x++)
+                    {
+                        for (int y = 0; y < matrix.length; y++)
+                        {
+                            matrix[y][x] = 0;
+                        }
+                    }
+                }
+
+                int ilosc=0;
+                for (int i = 0; i < ileMatrixow; i++)
+                {
+                    matrix = listaMatrixow.get(i);
+                    for (int x = 0; x < matrix[0].length; x++)
+                    {
+                        for (int y = 0; y < matrix.length; y++)
+                        {
+                            if(ilosc==integerParseInt.length)
+                            {
+                                matrix[y][x]=0;
+                                break;
+                            }
+                            matrix[y][x] = integerParseInt[ilosc];
+                            ilosc++;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < ileMatrixow; i++)
+                {
+                    matrix = listaMatrixow.get(i);
+                    for (int x = 0; x < matrix[0].length; x++)
+                    {
+                        for (int y = 0; y < matrix.length; y++)
+                        {
+                            int kluczWartosc=data.klucz.charAt(y);
+                            matrix[x][y]=matrix[x][y]-kluczWartosc;
+                        }
+                    }
+                }
+
+                int liczba=0;
+                String [][] odszyfrowanaWiadomosc = new String[data.klucz.length()][data.klucz.length()];
+                PrintWriter zaszyfrowanyPlik = null;
+                try {
+                    zaszyfrowanyPlik = new PrintWriter(data.plikTxt);
+                    for (int i = 0; i < ileMatrixow; i++)
+                    {
+                        matrix = listaMatrixow.get(i);
+                        for (int x = 0; x < matrix[0].length; x++)
+                        {
+                            for (int y = 0; y < matrix.length; y++)
+                            {
+                                if(matrix[x][y]<0)
+                                {
+                                    break;
+                                }
+                                odszyfrowanaWiadomosc[x][y]=Character.toString((char)matrix[x][y]);
+                                zaszyfrowanyPlik.print(odszyfrowanaWiadomosc[x][y]+" ");
+                            }
+                        }
+                    }
+                    zaszyfrowanyPlik.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
             }
         });
     }
@@ -116,28 +216,91 @@ public class Szyfrowanie extends Application {
                 data.plikZaszyfr = fileChooser.showOpenDialog(primaryStage);
             }
         });
-        zaszyfruj.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        zaszyfruj.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
             public void handle(MouseEvent event) {
                 PasswordField textField = (PasswordField) szyfrowanieOkno.lookup("#klucz");
                 data.klucz = textField.getText();
                 System.out.println("szyfrowanie");
-            //twoj kod do szyfrowania
 
+                Scanner in = null;
+                try {
+                    in = new Scanner(data.plikTxt);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                String zaszyfrowaneZdanie = in.nextLine();
+                while (in.hasNext()) {
+                    System.out.println(in.nextLine());
+                }
+
+                int[][] matrix = new int[data.klucz.length()][data.klucz.length()];
+                int iloscPol = data.klucz.length() * data.klucz.length();
+
+                int ileMatrixow = (int) (zaszyfrowaneZdanie.length()) / (iloscPol) + 1;
+
+                ArrayList<int[][]> listaMatrixow = new ArrayList<int[][]>();
+
+                for (int i = 0; i < ileMatrixow; i++)
+                {
+                    matrix = new int[data.klucz.length()][data.klucz.length()];
+                    listaMatrixow.add(matrix);
+                    for (int x = 0; x < matrix[0].length; x++) {
+                        for (int y = 0; y < matrix.length; y++) {
+                            matrix[y][x] = 0;
+                        }
+                    }
+                }
+
+                int ilosc2 = 1;
+                for (int i = 0; i < ileMatrixow; i++) {
+                    matrix = listaMatrixow.get(i);
+                    for (int x = 0; x < matrix[0].length; x++) {
+                        for (int y = 0; y < matrix.length; y++) {
+                            if (ilosc2 == zaszyfrowaneZdanie.length()) {
+                                matrix[y][x] = 0;
+                            } else {
+                                int kluczWartosc = (int) data.klucz.charAt(y);
+                                int textWartosc = (int) zaszyfrowaneZdanie.charAt(ilosc2);
+                                matrix[y][x] = textWartosc + kluczWartosc;
+                                ilosc2++;
+                            }
+                        }
+                    }
+                }
+
+                try {
+                    PrintWriter zaszyfrowanyPlik = new PrintWriter(data.plikZaszyfr);
+                    for (int i = 0; i < ileMatrixow; i++)
+                    {
+                        matrix = listaMatrixow.get(i);
+
+                        for (int x = 0; x < matrix[0].length; x++)
+                        {
+                            for (int y = 0; y < matrix.length; y++)
+                            {
+                                zaszyfrowanyPlik.print(matrix[x][y]+" ");
+                            }
+                        }
+                        zaszyfrowanyPlik.println("");
+                    }
+                    zaszyfrowanyPlik.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 
-    private void changeView(Stage primaryStage, Pane widok) {
+    private void changeView(Stage primaryStage, Pane widok)
+    {
         primaryStage.setScene(new Scene(widok));
         primaryStage.show();
     }
 
 
-
-
     public static  void main (String [] args)
     {
-
         Application.launch(args);
 
     }
