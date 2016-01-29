@@ -1,7 +1,6 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -36,9 +35,100 @@ public class Szyfrowanie extends Application {
         final Pane szyfrowanieOkno = (Pane) FXMLLoader.load(Szyfrowanie.class.getResource("secondWindow.fxml"));
         final Pane deszyfrowanieOkno = (Pane) FXMLLoader.load(Szyfrowanie.class.getResource("thirdWindow.fxml"));
         final Pane mainWindow = (Pane) FXMLLoader.load(Szyfrowanie.class.getResource("mainWindow.fxml"));
+        final Pane infoWindowZaszyfr =(Pane) FXMLLoader.load(Szyfrowanie.class.getResource("infoWindowZaszyfr.fxml"));
+        final Pane infoWindowDeszyfr = (Pane) FXMLLoader.load(Szyfrowanie.class.getResource("infoWindowDeszyfr.fxml"));
+
+
+
 
         Button takButton = (Button) mainWindow.lookup("#takButton");
         Button nieButton = (Button) mainWindow.lookup("#nieButton");
+
+        Button pomocZaszyfr = (Button) szyfrowanieOkno.lookup("#pomocZaszyfr");
+        Button pomocDeszyfr = (Button) deszyfrowanieOkno.lookup("#pomocDeszyfr");
+
+        final Button powrotZaszyfr = (Button) infoWindowZaszyfr.lookup("#powrotZaszyfr");
+        Button powrotDeszyfr = (Button) infoWindowDeszyfr.lookup("#powrotDeszyfr");
+
+
+        pomocZaszyfr.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            public void handle(MouseEvent event)
+            {
+                Label infoPlikJawny = (Label) infoWindowZaszyfr.lookup("#infoPlikJawny");
+                Label dlugPlikJaw = (Label) infoWindowZaszyfr.lookup("#dlugPlikJaw");
+                Label infoPlik = (Label) infoWindowZaszyfr.lookup("#infoPlikZasz");
+                Label dlugPlikZasz=(Label)infoWindowZaszyfr.lookup("#dlugPlikZasz");
+                Label infoKlucz = (Label) infoWindowZaszyfr.lookup("#infoKlucz");
+
+                infoPlikJawny.setText("Sciezka pliku do zaszyfrowania: "+data.plikTxt.getAbsolutePath());
+                dlugPlikJaw.setText("Ilosc znaków w pliku jawnym: "+data.plikTxt.length());
+                infoPlik.setText("Sciezka docelowego pliku: "+data.plikZaszyfr.getAbsolutePath());
+                dlugPlikZasz.setText("Ilosc znaków w pliku zaszyfrowanym: "+data.plikZaszyfr.length());
+                infoKlucz.setText("Ilość znaków w kluczu to: "+data.klucz.length());
+                changeView(primaryStage, infoWindowZaszyfr);
+
+            }
+        });
+
+        pomocDeszyfr.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            public void handle(MouseEvent event)
+            {
+                Label infoPlikZaszyfrowany = (Label) infoWindowDeszyfr.lookup("#infoPlikZasz");
+                Label dlugPlikZasz = (Label) infoWindowDeszyfr.lookup("#dlugPlikZasz");
+                Label infoPlikOdsz = (Label) infoWindowDeszyfr.lookup("#infoPlikOdsz");
+                Label dlugPlikOdsz=(Label)infoWindowDeszyfr.lookup("#dlugPlikOdsz");
+                Label infoKlucz = (Label) infoWindowDeszyfr.lookup("#infoKlucz");
+
+                infoPlikZaszyfrowany.setText("Sciezka pliku zaszyfrowanego: "+data.plikZaszyfr.getAbsolutePath());
+                dlugPlikZasz.setText("Ilosc znaków w pliku zaszyfrowanym: "+data.plikZaszyfr.length());
+                infoPlikOdsz.setText("Sciezka odszyfrowanego pliku: "+data.plikTxt.getAbsolutePath());
+                dlugPlikOdsz.setText("Ilosc znaków w pliku odszyfrowanym: "+data.plikTxt.length());
+                infoKlucz.setText("Ilość znaków w kluczu to: "+data.klucz.length());
+                changeView(primaryStage, infoWindowDeszyfr);
+            }
+        });
+
+        powrotZaszyfr.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            public void handle(MouseEvent event)
+            {
+                szyfrowanie(primaryStage, data, szyfrowanieOkno);
+                try {
+                    szyfrowanie(primaryStage, data, szyfrowanieOkno);
+                    Parent root = FXMLLoader.load(getClass().getResource("secondWindow.fxml"));
+                    Scene scene = new Scene(root);
+                    primaryStage.setScene(scene);
+                    primaryStage.show();
+                    szyfrowanie(primaryStage, data, (Pane) root);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                szyfrowanie(primaryStage, data, szyfrowanieOkno);
+            }
+        });
+
+        powrotDeszyfr.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            public void handle(MouseEvent event)
+            {
+                deszyfrowanie(deszyfrowanieOkno, data, primaryStage);
+                try {
+                    deszyfrowanie(deszyfrowanieOkno, data, primaryStage);
+                    Parent root = FXMLLoader.load(getClass().getResource("thirdWindow.fxml"));
+                    Scene scene = new Scene(root);
+                    primaryStage.setScene(scene);
+                    primaryStage.show();
+                    deszyfrowanie((Pane) root, data, primaryStage);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                deszyfrowanie(deszyfrowanieOkno, data, primaryStage);
+            }
+        });
 
         takButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -53,9 +143,6 @@ public class Szyfrowanie extends Application {
                 deszyfrowanie(deszyfrowanieOkno, data, primaryStage);
             }
         });
-
-
-
 
         changeView(primaryStage, mainWindow);
     }
@@ -198,8 +285,6 @@ public class Szyfrowanie extends Application {
         Button zaszyfruj = (Button) szyfrowanieOkno.lookup("#zaszyfruj");
 
 
-
-
         plikTxt.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 FileChooser fileChooser = new FileChooser();
@@ -269,6 +354,7 @@ public class Szyfrowanie extends Application {
                     }
                 }
 
+
                 try {
                     PrintWriter zaszyfrowanyPlik = new PrintWriter(data.plikZaszyfr);
                     for (int i = 0; i < ileMatrixow; i++)
@@ -297,6 +383,8 @@ public class Szyfrowanie extends Application {
         primaryStage.setScene(new Scene(widok));
         primaryStage.show();
     }
+
+
 
 
     public static  void main (String [] args)

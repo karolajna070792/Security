@@ -199,6 +199,7 @@ public class Main {
         File file = new File("c:\\Users\\Karolina\\Desktop\\poczatkowy.txt");
         File file2 = new File("c:\\Users\\Karolina\\Desktop\\koncowy.txt");
         File file3 = new File("c:\\Users\\Karolina\\Desktop\\odszyfrowanyPlik.txt");
+
 //        ArrayList <int [][]> listaMatrixow = test.szyfrowanieBloku(file, "Tomasz");
 //        test.zapisywanieDoPliku_zaszyfrowanaWiadomosc(listaMatrixow, file2);
 //        test.deszyfrowanie(file2, "Tomasz");
@@ -265,97 +266,97 @@ public class Main {
 
 
         //deszyfrowanie na przykladzie
-        String klucz = "Tomasz";
-        Scanner in = new Scanner(file2);
-        String zaszyfrowaneZdanie = in.nextLine();
-        while (in.hasNext()) {
-            zaszyfrowaneZdanie = zaszyfrowaneZdanie + in.nextLine();
-        }
-        String[] parts = zaszyfrowaneZdanie.split(" ");
-        int [] integerParseInt = new int[parts.length];
-
-        for (int i = 0; i < parts.length; i++)
-        {
-            integerParseInt[i]=Integer.parseInt(parts[i]);
-            System.out.print(integerParseInt[i]+" ");
-        }
-        System.out.println(" ");
-        int[][] matrix = new int[klucz.length()][klucz.length()];
-        int iloscPol = klucz.length() * klucz.length();
-        int ileMatrixow = (int) (zaszyfrowaneZdanie.length()) / (iloscPol) + 1;
-        System.out.println("Ile matrixow: " + ileMatrixow);
-        ArrayList<int[][]> listaMatrixow = new ArrayList<int[][]>();
-
-        for (int i = 0; i < ileMatrixow; i++) {
-            matrix = new int[klucz.length()][klucz.length()];
-            listaMatrixow.add(matrix);
-            for (int x = 0; x < matrix[0].length; x++) {
-                for (int y = 0; y < matrix.length; y++) {
-                    matrix[y][x] = 0;
-                }
-            }
-        }
-
-        int ilosc=0;
-        for (int i = 0; i < ileMatrixow; i++)
-        {
-            matrix = listaMatrixow.get(i);
-            for (int x = 0; x < matrix[0].length; x++)
-            {
-                for (int y = 0; y < matrix.length; y++)
-                {
-                    if(ilosc==integerParseInt.length)
-                    {
-                        matrix[y][x]=0;
-                        break;
-                    }
-                    matrix[y][x] = integerParseInt[ilosc];
-                    ilosc++;
-                }
-            }
-        }
-
-
-        for (int i = 0; i < ileMatrixow; i++)
-        {
-            matrix = listaMatrixow.get(i);
-            for (int x = 0; x < matrix[0].length; x++)
-            {
-                for (int y = 0; y < matrix.length; y++)
-                {
-                    int kluczWartosc=klucz.charAt(y);
-                    matrix[x][y]=matrix[x][y]-kluczWartosc;
-                    System.out.print(matrix[x][y]+" ");
-                }
-                System.out.println("");
-            }
-            System.out.println("");
-        }
-
-        int liczba=0;
-        String [][] odszyfrowanaWiadomosc = new String[klucz.length()][klucz.length()];
-        PrintWriter zaszyfrowanyPlik = new PrintWriter(file3);
-
-        for (int i = 0; i < ileMatrixow; i++)
-        {
-            matrix = listaMatrixow.get(i);
-            for (int x = 0; x < matrix[0].length; x++)
-            {
-                for (int y = 0; y < matrix.length; y++)
-                {
-                    if(matrix[x][y]<0)
-                    {
-                        break;
-                    }
-                    odszyfrowanaWiadomosc[x][y]=Character.toString((char)matrix[x][y]);
-                    zaszyfrowanyPlik.print(odszyfrowanaWiadomosc[x][y]+" ");
-                    System.out.print(odszyfrowanaWiadomosc[x][y]+" ");
-                }
-            }
-        }
-        zaszyfrowanyPlik.close();
-
-
+//        String klucz = "Tomasz";
+//        Scanner in = new Scanner(file2);
+//        String zaszyfrowaneZdanie = in.nextLine();
+//        while (in.hasNext()) {
+//            zaszyfrowaneZdanie = zaszyfrowaneZdanie + in.nextLine();
+//        }
+//        String[] parts = zaszyfrowaneZdanie.split(" ");
+//        int [] integerParseInt = new int[parts.length];
+//
+//        for (int i = 0; i < parts.length; i++)
+//        {
+//            integerParseInt[i]=Integer.parseInt(parts[i]);
+//            System.out.print(integerParseInt[i]+" ");
+//        }
+//        System.out.println(" ");
+//        int[][] matrix = new int[klucz.length()][klucz.length()];
+//        int iloscPol = klucz.length() * klucz.length();
+//        int ileMatrixow = (int) (zaszyfrowaneZdanie.length()) / (iloscPol) + 1;
+//        System.out.println("Ile matrixow: " + ileMatrixow);
+//        ArrayList<int[][]> listaMatrixow = new ArrayList<int[][]>();
+//
+//        for (int i = 0; i < ileMatrixow; i++) {
+//            matrix = new int[klucz.length()][klucz.length()];
+//            listaMatrixow.add(matrix);
+//            for (int x = 0; x < matrix[0].length; x++) {
+//                for (int y = 0; y < matrix.length; y++) {
+//                    matrix[y][x] = 0;
+//                }
+//            }
+//        }
+//
+//        int ilosc=0;
+//        for (int i = 0; i < ileMatrixow; i++)
+//        {
+//            matrix = listaMatrixow.get(i);
+//            for (int x = 0; x < matrix[0].length; x++)
+//            {
+//                for (int y = 0; y < matrix.length; y++)
+//                {
+//                    if(ilosc==integerParseInt.length)
+//                    {
+//                        matrix[y][x]=0;
+//                        break;
+//                    }
+//                    matrix[y][x] = integerParseInt[ilosc];
+//                    ilosc++;
+//                }
+//            }
+//        }
+//
+//
+//        for (int i = 0; i < ileMatrixow; i++)
+//        {
+//            matrix = listaMatrixow.get(i);
+//            for (int x = 0; x < matrix[0].length; x++)
+//            {
+//                for (int y = 0; y < matrix.length; y++)
+//                {
+//                    int kluczWartosc=klucz.charAt(y);
+//                    matrix[x][y]=matrix[x][y]-kluczWartosc;
+//                    System.out.print(matrix[x][y]+" ");
+//                }
+//                System.out.println("");
+//            }
+//            System.out.println("");
+//        }
+//
+//        int liczba=0;
+//        String [][] odszyfrowanaWiadomosc = new String[klucz.length()][klucz.length()];
+//        PrintWriter zaszyfrowanyPlik = new PrintWriter(file3);
+//
+//        for (int i = 0; i < ileMatrixow; i++)
+//        {
+//            matrix = listaMatrixow.get(i);
+//            for (int x = 0; x < matrix[0].length; x++)
+//            {
+//                for (int y = 0; y < matrix.length; y++)
+//                {
+//                    if(matrix[x][y]<0)
+//                    {
+//                        break;
+//                    }
+//                    odszyfrowanaWiadomosc[x][y]=Character.toString((char)matrix[x][y]);
+//                    zaszyfrowanyPlik.print(odszyfrowanaWiadomosc[x][y]+" ");
+//                    System.out.print(odszyfrowanaWiadomosc[x][y]+" ");
+//                }
+//            }
+//        }
+//        zaszyfrowanyPlik.close();
+//
+//
 
     }
 }

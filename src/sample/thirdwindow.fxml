@@ -7,13 +7,14 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button id="plik_zaszyfrowany" layoutX="54.0" layoutY="82.0" mnemonicParsing="false" text="Wybierz plik" />
-      <Button id="plik_odszyfr" layoutX="54.0" layoutY="247.0" mnemonicParsing="false" text="Wybierz docelowy plik" />
+      <Button id="plik_zaszyfrowany" layoutX="48.0" layoutY="57.0" mnemonicParsing="false" text="Wybierz plik" />
+      <Button id="plik_odszyfr" layoutX="48.0" layoutY="200.0" mnemonicParsing="false" text="Wybierz docelowy plik" />
       <Label layoutX="300.0" layoutY="82.0" prefHeight="25.0" prefWidth="231.0" />
 
-      <Label id ="labelOfKey" layoutX="300.0" layoutY="247.0" prefHeight="25.0" prefWidth="231.0" />
-      <PasswordField id="klucz" layoutX="300.0" layoutY="172.0" prefHeight="25.0" prefWidth="231.0" />
-      <Button id="deszyfruj" layoutX="230.0" layoutY="310.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="DESZYFRUJ" />
-      <Text layoutX="58.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wpisz klucz" />
+      <Label id="labelOfKey" layoutX="300.0" layoutY="247.0" prefHeight="25.0" prefWidth="231.0" />
+      <PasswordField id="klucz" layoutX="291.0" layoutY="134.0" prefHeight="25.0" prefWidth="231.0" />
+      <Button id="deszyfruj" layoutX="222.0" layoutY="272.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="DESZYFRUJ" />
+      <Button id="pomocDeszyfr" layoutX="251.0" layoutY="326.0" prefHeight="25.0" prefWidth="100.0" text="POMOC" />
+      <Text layoutX="57.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wpisz klucz" />
    </children>
 </Pane>
